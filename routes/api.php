@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\StudentsController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -21,3 +22,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('login', [UsersController::class, 'auth']);
 Route::post('register', [UsersController::class, 'store']);
+
+// Api request protected
+Route::group(['middleware' => ['jwt.verify']], function(){
+    Route::resource('students', StudentsController::class);
+});
